@@ -1,0 +1,308 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+ | Token desain WBS Inspektorat Kabupaten Pringsewu
+ | Hijau "padi" sebagai warna utama, emas sebagai aksen.
+ * ------------------------------------------------------------------ */
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+    --color-brand-50: #eefbf4;
+    --color-brand-100: #d5f5e4;
+    --color-brand-200: #aeeacd;
+    --color-brand-300: #78d8ae;
+    --color-brand-400: #42bd8c;
+    --color-brand-500: #1fa271;
+    --color-brand-600: #12825b;
+    --color-brand-700: #0f684b;
+    --color-brand-800: #10533d;
+    --color-brand-900: #0e4434;
+    --color-brand-950: #04261d;
+
+    --color-gold-50: #fffaeb;
+    --color-gold-100: #fdf0c8;
+    --color-gold-200: #fbdf8c;
+    --color-gold-300: #f9c850;
+    --color-gold-400: #f7b027;
+    --color-gold-500: #f18e0e;
+    --color-gold-600: #d56b09;
+    --color-gold-700: #b14b0b;
+    --color-gold-800: #903b10;
+    --color-gold-900: #763110;
+
+    --color-ink-50: #f6f7f9;
+    --color-ink-100: #eceef2;
+    --color-ink-200: #d4d9e3;
+    --color-ink-300: #aeb8cb;
+    --color-ink-400: #8192ae;
+    --color-ink-500: #617394;
+    --color-ink-600: #4c5b7a;
+    --color-ink-700: #3f4a63;
+    --color-ink-800: #374054;
+    --color-ink-900: #0f1729;
+    --color-ink-950: #080d18;
+
+    --shadow-soft: 0 1px 2px rgb(15 23 41 / 0.04), 0 8px 24px -12px rgb(15 23 41 / 0.12);
+    --shadow-lift: 0 2px 4px rgb(15 23 41 / 0.04), 0 18px 40px -16px rgb(15 23 41 / 0.22);
+    --shadow-glow: 0 12px 40px -12px rgb(18 130 91 / 0.45);
+
+    --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    --animate-fade-in: fade-in 0.4s ease-out both;
+    --animate-float: float 7s ease-in-out infinite;
+    --animate-shimmer: shimmer 2.5s linear infinite;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-16px) rotate(2deg);
+    }
+}
+
+@keyframes shimmer {
+    from {
+        background-position: -200% 0;
+    }
+    to {
+        background-position: 200% 0;
+    }
+}
+
+/* ------------------------------------------------------------------
+ | Dasar
+ * ------------------------------------------------------------------ */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-ink-50 text-ink-900 antialiased dark:bg-ink-950 dark:text-ink-100;
+    }
+
+    ::selection {
+        @apply bg-brand-500/25;
+    }
+
+    /* Batang gulir yang lebih ramping */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply rounded-full border-2 border-transparent bg-ink-300/70 bg-clip-content dark:bg-ink-700;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-ink-400 dark:bg-ink-600;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+/* ------------------------------------------------------------------
+ | Komponen
+ * ------------------------------------------------------------------ */
+@layer components {
+    .btn {
+        @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold
+        transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500
+        disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply bg-brand-600 text-white shadow-[var(--shadow-glow)] hover:bg-brand-700 active:scale-[0.98];
+    }
+
+    .btn-gold {
+        @apply bg-gold-400 text-ink-900 shadow-lg shadow-gold-500/25 hover:bg-gold-300 active:scale-[0.98];
+    }
+
+    .btn-outline {
+        @apply border border-ink-200 bg-white text-ink-700 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700
+        dark:border-ink-700 dark:bg-ink-900 dark:text-ink-200 dark:hover:border-brand-700 dark:hover:bg-brand-950/50 dark:hover:text-brand-300;
+    }
+
+    .btn-ghost {
+        @apply text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-ink-800 dark:hover:text-white;
+    }
+
+    .btn-danger {
+        @apply bg-rose-600 text-white shadow-lg shadow-rose-500/25 hover:bg-rose-700 active:scale-[0.98];
+    }
+
+    .btn-sm {
+        @apply gap-1.5 rounded-lg px-3 py-1.5 text-xs;
+    }
+
+    .btn-lg {
+        @apply rounded-2xl px-6 py-3.5 text-base;
+    }
+
+    .card {
+        @apply rounded-2xl border border-ink-200/70 bg-white shadow-[var(--shadow-soft)] dark:border-ink-800 dark:bg-ink-900;
+    }
+
+    .card-hover {
+        @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lift)];
+    }
+
+    .label {
+        @apply mb-1.5 block text-sm font-semibold text-ink-700 dark:text-ink-200;
+    }
+
+    .field {
+        @apply block w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900
+        shadow-xs transition placeholder:text-ink-400
+        focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none
+        disabled:cursor-not-allowed disabled:bg-ink-100
+        dark:border-ink-700 dark:bg-ink-950 dark:text-ink-100 dark:placeholder:text-ink-500 dark:disabled:bg-ink-800;
+    }
+
+    .field-error {
+        @apply border-rose-400 focus:border-rose-500 focus:ring-rose-500/15;
+    }
+
+    .help {
+        @apply mt-1.5 text-xs text-ink-500 dark:text-ink-400;
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset;
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-medium;
+    }
+
+    .sidebar-link {
+        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-600 transition-all
+        hover:bg-ink-100 hover:text-ink-900 dark:text-ink-400 dark:hover:bg-ink-800/70 dark:hover:text-white;
+    }
+
+    .sidebar-link-active {
+        @apply bg-brand-600 text-white shadow-[var(--shadow-glow)] hover:bg-brand-600 hover:text-white
+        dark:bg-brand-600 dark:text-white dark:hover:bg-brand-600;
+    }
+
+    .glass {
+        @apply border border-white/15 bg-white/10 backdrop-blur-xl;
+    }
+
+    .section-title {
+        @apply text-2xl font-extrabold tracking-tight text-ink-900 sm:text-3xl dark:text-white;
+    }
+
+    .teks-gradien {
+        @apply bg-gradient-to-r from-brand-400 via-brand-300 to-gold-300 bg-clip-text text-transparent;
+    }
+
+    .tabel {
+        @apply w-full text-left text-sm;
+    }
+
+    .tabel thead th {
+        @apply border-b border-ink-200 px-4 py-3 text-xs font-bold tracking-wider text-ink-500 uppercase dark:border-ink-800 dark:text-ink-400;
+    }
+
+    .tabel tbody td {
+        @apply border-b border-ink-100 px-4 py-3.5 align-middle text-ink-700 dark:border-ink-800/70 dark:text-ink-300;
+    }
+
+    .tabel tbody tr {
+        @apply transition-colors hover:bg-ink-50/70 dark:hover:bg-ink-800/40;
+    }
+
+    /* Isi berita / uraian pengaduan */
+    .isi-teks {
+        @apply text-[15px]/7 text-ink-700 dark:text-ink-300;
+    }
+
+    .isi-teks p {
+        @apply mb-4;
+    }
+
+    .isi-teks h2 {
+        @apply mt-8 mb-3 text-xl font-bold text-ink-900 dark:text-white;
+    }
+
+    .isi-teks h3 {
+        @apply mt-6 mb-2 text-lg font-bold text-ink-900 dark:text-white;
+    }
+
+    .isi-teks ul {
+        @apply mb-4 list-disc space-y-1 pl-5;
+    }
+
+    .isi-teks ol {
+        @apply mb-4 list-decimal space-y-1 pl-5;
+    }
+
+    .isi-teks a {
+        @apply font-medium text-brand-600 underline underline-offset-2 hover:text-brand-700 dark:text-brand-400;
+    }
+
+    .isi-teks blockquote {
+        @apply my-4 border-l-4 border-brand-300 bg-brand-50/60 py-2 pl-4 italic dark:border-brand-700 dark:bg-brand-950/30;
+    }
+}
+
+/* ------------------------------------------------------------------
+ | Utilitas tambahan
+ * ------------------------------------------------------------------ */
+@utility bg-grid {
+    background-image:
+        linear-gradient(to right, rgb(148 163 184 / 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(148 163 184 / 0.12) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+@utility bg-noise {
+    background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 6px 6px;
+}
+
+@media print {
+    .tanpa-cetak {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+}
